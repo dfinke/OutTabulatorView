@@ -40,7 +40,6 @@ $data = $(
     New-Record "Oli Bob" "12" (1, 20, 5, 3, 10, 13, 17, 15, 9, 11, 10, 12, 14, 16, 13, 9, 7, 11, 10, 13) "male" "1" "red" "19/02/1984" "1"
     New-Record "Paul Branderson" "60" (1, 3, 1, 3, 3, 1, 11, 15, 19, 20, 17, 16, 16, 5, 3, 2, 1, 3, 1, 3) "male" "5" "orange" "01/01/1982" ""
     New-Record "Victoria Bath" "20" (10, 12, 14, 16, 13, 9, 7, 1, 2, 3, 4, 5, 4, 2, 5, 9, 8, 11, 10, 13) "female" "2" "purple" "22/03/1986" ""
-
 )
 
 $ColumnProperties = $(
@@ -55,5 +54,4 @@ $ColumnProperties = $(
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
 $tableOptions = New-TableOption -height 250 -layout fitColumns -pagination local -paginationSize 10 -clipboard
-
 $data | Out-TabulatorView $ColumnProperties $tableOptions
