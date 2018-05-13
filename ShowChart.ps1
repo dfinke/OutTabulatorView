@@ -1,5 +1,5 @@
 param(
-    [Switch]$WithColumnProperties
+    [Switch]$NoColumnProperties
 )
 
 Import-Module .\Tabulator.psm1 -Force
@@ -43,15 +43,17 @@ $data = $(
 
 )
 
-if ($WithColumnProperties) {
-    $ColumnProperties = $(
-        New-ColumnProperty Name -frozen true
-        New-ColumnProperty Progress -formatter progress
-        New-ColumnProperty Activity -formatter lineFormatter
-        New-ColumnProperty Rating -formatter star
-        New-ColumnProperty Driver -formatter tickCross
-        New-ColumnProperty dob -title "Date of Birth"
-    )
-}
+$ColumnProperties = $(
+    New-ColumnOption Name -frozen true
+    New-ColumnOption Progress -formatter progress
+    New-ColumnOption Activity -formatter lineFormatter
+    New-ColumnOption Rating -formatter star
+    New-ColumnOption Driver -formatter tickCross
+    New-ColumnOption dob -title "Date of Birth"
+)
 
-$data | Out-TabulatorView $ColumnProperties
+if ($NoColumnProperties) { $ColumnProperties = @{} }
+
+$tableOptions = New-TableOption -height 250 -layout fitColumns -pagination local -paginationSize 10 -clipboard
+
+$data | Out-TabulatorView $ColumnProperties $tableOptions

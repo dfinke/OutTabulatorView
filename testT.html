@@ -611,6 +611,9 @@
   //create Tabulator on DOM element with id "example-table"
   $("#example-table").tabulator(
         {
+    "height":  250,
+    "clipboard":  true,
+    "layout":  "fitColumns",
     "columns":  [
                     {
                         "field":  "Name",
@@ -645,14 +648,8 @@
                         "title":  "Driver"
                     }
                 ],
-    "addRowPos":  "top",
-    "layout":  "fitColumns",
-    "height":  205,
-    "movableColumns":  true,
-    "history":  true,
     "pagination":  "local",
-    "paginationSize":  10,
-    "clipboard":  true
+    "paginationSize":  10
 ,
     //rowClick:function(e, row){ //trigger an alert message when the row is clicked
     //    alert("Row " + row.getData().id + " Clicked!!!!");

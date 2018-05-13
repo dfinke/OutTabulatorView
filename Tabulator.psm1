@@ -1,6 +1,7 @@
 function Out-TabulatorView {
     param(
-        $columnProperties,
+        $columnOptions,
+        [hashtable]$tableOptions,
         [Parameter(ValueFromPipeline)]
         $data
     )
@@ -18,23 +19,34 @@ function Out-TabulatorView {
         $names = $records[0].psobject.properties.name
         $targetData = $records | ConvertTo-Json -Depth 5
 
-        $tabulatorColumnOptions = [ordered]@{
-            columns        = @()
-            addRowPos      = "top"
-            layout         = "fitColumns"
-            height         = 205
-            movableColumns = $true
-            history        = $true
-            pagination     = "local"
-            paginationSize = 10
-            clipboard      = $true
+        $tabulatorColumnOptions = @{}
+        if ($tableOptions) {
+            $tabulatorColumnOptions += $tableOptions
         }
+
+        $tabulatorColumnOptions.columns = @()
+        # $tabulatorColumnOptions.layout = "fitColumns"
+        # $tabulatorColumnOptions.height = 205
+
+        # $tabulatorColumnOptions = @{
+        #     columns = @()
+
+        #     # addRowPos      = "top"
+        #     # layout         = "fitColumns"
+        #     # height         = 205
+        #     # movableColumns = $true
+        #     # history        = $true
+        #     # pagination     = "local"
+        #     # paginationSize = 10
+        #     # clipboard      = $true
+        # }
+
 
         foreach ($name in $names) {
             $targetColumn = @{field = $name}
 
-            if ($columnProperties.$name) {
-                $columnProperties.$name.getenumerator() | % {
+            if ($columnOptions.$name) {
+                $columnOptions.$name.getenumerator() | ForEach-Object {
                     $targetColumn.($_.key) = $_.value
                 }
             }
@@ -86,12 +98,35 @@ function Out-TabulatorView {
 
 </script>
 "@ | set-content $pwd\testT.html -Encoding Ascii
-        start "$pwd\testT.html"
+        Start-Process "$pwd\testT.html"
 
     }
 }
 
-function New-ColumnProperty {
+
+function New-TableOption {
+    param(
+        $height,
+        [ValidateSet('fitColumns')]
+        $layout,
+        [ValidateSet('local')]
+        $pagination,
+        $paginationSize,
+        [switch]$clipboard
+    )
+
+
+    $r = @{} + $PSBoundParameters
+
+    if($clipboard) {
+        $r.Remove('clipboard')
+        $r.clipboard = $true
+    }
+
+    $r
+}
+
+function New-ColumnOption {
     param(
         [Parameter(Mandatory)]
         $ColumnName,
