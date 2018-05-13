@@ -1,3 +1,7 @@
+param(
+    [Switch]$WithColumnProperties
+)
+
 Import-Module .\Tabulator.psm1 -Force
 
 function New-Record {
@@ -15,7 +19,7 @@ function New-Record {
     [pscustomobject]([ordered]@{} + $PSBoundParameters)
 }
 
-$(
+$data = $(
     #          Name Progress Activity Gender Rating Color dob Driver
     New-Record "Alan Francis" "90" (4, 17, 11, 7, 6, 12, 14, 13, 11, 10, 9, 6, 11, 12, 0, 5, 12, 14, 18, 11) male 3 blue "07/08/1972" "true"
     New-Record "Brendon Philips" "100" (3, 7, 9, 1, 4, 8, 2, 6, 4, 2, 1, 3, 1, 3, 3, 1, 1, 3, 1, 3) "male" "1" "orange" "01/08/1980" ""
@@ -37,11 +41,17 @@ $(
     New-Record "Paul Branderson" "60" (1, 3, 1, 3, 3, 1, 11, 15, 19, 20, 17, 16, 16, 5, 3, 2, 1, 3, 1, 3) "male" "5" "orange" "01/01/1982" ""
     New-Record "Victoria Bath" "20" (10, 12, 14, 16, 13, 9, 7, 1, 2, 3, 4, 5, 4, 2, 5, 9, 8, 11, 10, 13) "female" "2" "purple" "22/03/1986" ""
 
-) | Out-TabulatorView $(
-    New-ColumnProperty Name -frozen true
-    New-ColumnProperty Progress -formatter progress
-    New-ColumnProperty Activity -formatter lineFormatter
-    New-ColumnProperty Rating -formatter star
-    New-ColumnProperty Driver -formatter tickCross
-    New-ColumnProperty dob -title "Date of Birth"
 )
+
+if ($WithColumnProperties) {
+    $ColumnProperties = $(
+        New-ColumnProperty Name -frozen true
+        New-ColumnProperty Progress -formatter progress
+        New-ColumnProperty Activity -formatter lineFormatter
+        New-ColumnProperty Rating -formatter star
+        New-ColumnProperty Driver -formatter tickCross
+        New-ColumnProperty dob -title "Date of Birth"
+    )
+}
+
+$data | Out-TabulatorView $ColumnProperties
