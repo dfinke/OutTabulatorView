@@ -1,0 +1,5 @@
+import-module ..\Tabulator.psm1 -force
+$data = ps | select Company, Name, Handles
+
+$data | Out-TabulatorView
+$data | Out-TabulatorView -tableOptions (New-TableOption -pagination local -paginationSize 15)
