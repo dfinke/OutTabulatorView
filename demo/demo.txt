@@ -1,3 +1,4 @@
+$PSVersionTable
 import-module ..\Tabulator.psm1 -force
 $data = ps | select Company, Name, Handles
 
