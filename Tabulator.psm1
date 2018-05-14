@@ -17,7 +17,8 @@ function Out-TabulatorView {
     End {
 
         $names = $records[0].psobject.properties.name
-        $targetData = $records | ConvertTo-Json -Depth 5
+        # $targetData = $records | ConvertTo-Json -Depth 5
+        $targetData = $records | ConvertTo-csv | ConvertFrom-Csv | ConvertTo-Json -Depth 5
 
         $tabulatorColumnOptions = @{}
         if ($tableOptions) {
@@ -70,8 +71,8 @@ function Out-TabulatorView {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/js/tabulator.min.js"></script>
 <script type="text/javascript" src="https://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js"></script>
 
-<link href="/dist/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator.min.css" rel="stylesheet">
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator_midnight.min.css" rel="stylesheet"> --!>
 
 <div id="example-table"></div>
 
@@ -87,14 +88,10 @@ function Out-TabulatorView {
   //load sample data into the table
   //create Tabulator on DOM element with id "example-table"
   `$("#example-table").tabulator(
-        $($tabulatorColumnOptions),
-    //rowClick:function(e, row){ //trigger an alert message when the row is clicked
-    //    alert("Row " + row.getData().id + " Clicked!!!!");
-    //},
+        $($tabulatorColumnOptions)
 });
 
 `$("#example-table").tabulator("setData", tabledata);
-//`$("#example-table").tabulator("download", "csv", "data.csv");
 
 </script>
 "@ | set-content $pwd\testT.html -Encoding Ascii
@@ -112,13 +109,14 @@ function New-TableOption {
         [ValidateSet('local')]
         $pagination,
         $paginationSize,
+        $groupBy,
         [switch]$clipboard
     )
 
 
     $r = @{} + $PSBoundParameters
 
-    if($clipboard) {
+    if ($clipboard) {
         $r.Remove('clipboard')
         $r.clipboard = $true
     }
@@ -137,8 +135,8 @@ function New-ColumnOption {
         $sorter,
         [ValidateSet('left', 'right', 'center')]
         $align,
-        #[ValidateSet('true','false')]
-        [string]$editor = "false",
+        [ValidateSet('input', 'textarea', 'number', 'tick', 'star', 'progress', 'select')]
+        [string]$editor,
         [ValidateSet('true', 'false')]
         [string]$headerSort,
         [ValidateSet('true', 'false')]
