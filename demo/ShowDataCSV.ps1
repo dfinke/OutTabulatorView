@@ -18,3 +18,4 @@ return
 ps | where Company | select Company, Name, Handle | Out-TabulatorView -tableOptions (New-TableOption -groupBy Company)
 
 gsv | select DisplayName, Status, StartType | Out-TabulatorView -tableOptions (New-TableOption -groupBy Status)
+gsv | select DisplayName, Status, StartType | Out-TabulatorView -tableOptions (New-TableOption -groupBy Status, StartType)
