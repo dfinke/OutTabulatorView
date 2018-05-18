@@ -4,6 +4,8 @@ function Out-TabulatorView {
         $height,
         [ValidateSet('fitColumns')]
         $layout,
+        [ValidateSet('Simple', 'Midnight', 'Modern', 'Site')]
+        $theme,
         [ValidateSet('local')]
         $pagination,
         $paginationSize,
