@@ -60,13 +60,13 @@ function Out-TabulatorView {
 
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
 
-        @"
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/js/tabulator.min.js"></script>
-<script type="text/javascript" src="https://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js"></script>
+@"
+<script type="text/javascript" src="$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="$PSScriptRoot\js\jquery-ui.min.js"></script>
+<script type="text/javascript" src="$PSScriptRoot\js\tabulator.min.js"></script>
+<script type="text/javascript" src="$PSScriptRoot\js\jquery.sparkline.min.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator.min.css" rel="stylesheet">
+<link href="$PSScriptRoot\css\tabulator.min.css" rel="stylesheet">
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator_midnight.min.css" rel="stylesheet"> --!>
 
 <div id="example-table"></div>
