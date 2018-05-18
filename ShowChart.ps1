@@ -53,5 +53,10 @@ $ColumnProperties = $(
 
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
-$tableOptions = New-TableOption -height 250 -layout fitColumns -pagination local -paginationSize 10 -clipboard
-$data | Out-TabulatorView $ColumnProperties $tableOptions
+$data | 
+    Out-TabulatorView $ColumnProperties `
+        -height 250 `
+        -layout fitColumns `
+        -pagination local `
+        -paginationSize 10 `
+        -clipboard

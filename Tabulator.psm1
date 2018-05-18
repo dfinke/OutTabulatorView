@@ -1,7 +1,14 @@
 function Out-TabulatorView {
     param(
         $columnOptions,
-        [hashtable]$tableOptions,
+        $height,
+        [ValidateSet('fitColumns')]
+        $layout,
+        [ValidateSet('local')]
+        $pagination,
+        $paginationSize,
+        $groupBy,
+        [switch]$clipboard,               
         [Parameter(ValueFromPipeline)]
         $data
     )
@@ -17,31 +24,10 @@ function Out-TabulatorView {
     End {
 
         $names = $records[0].psobject.properties.name
-        # $targetData = $records | ConvertTo-Json -Depth 5
         $targetData = $records | ConvertTo-csv | ConvertFrom-Csv | ConvertTo-Json -Depth 5
 
         $tabulatorColumnOptions = @{}
-        if ($tableOptions) {
-            $tabulatorColumnOptions += $tableOptions
-        }
-
         $tabulatorColumnOptions.columns = @()
-        # $tabulatorColumnOptions.layout = "fitColumns"
-        # $tabulatorColumnOptions.height = 205
-
-        # $tabulatorColumnOptions = @{
-        #     columns = @()
-
-        #     # addRowPos      = "top"
-        #     # layout         = "fitColumns"
-        #     # height         = 205
-        #     # movableColumns = $true
-        #     # history        = $true
-        #     # pagination     = "local"
-        #     # paginationSize = 10
-        #     # clipboard      = $true
-        # }
-
 
         foreach ($name in $names) {
             $targetColumn = @{field = $name}
@@ -57,6 +43,15 @@ function Out-TabulatorView {
             }
 
             $tabulatorColumnOptions.columns += $targetColumn
+        }
+
+        $params = @{}+$PSBoundParameters
+
+        $params.Remove("columnOptions")        
+        $params.Remove("data")
+
+        foreach($entity in $params.GetEnumerator()) {
+            $tabulatorColumnOptions.($entity.Key) = $entity.Value
         }
 
         [string]$tabulatorColumnOptions = $tabulatorColumnOptions | ConvertTo-Json -Depth 5
@@ -98,30 +93,6 @@ function Out-TabulatorView {
         Start-Process "$pwd\testT.html"
 
     }
-}
-
-
-function New-TableOption {
-    param(
-        $height,
-        [ValidateSet('fitColumns')]
-        $layout,
-        [ValidateSet('local')]
-        $pagination,
-        $paginationSize,
-        $groupBy,
-        [switch]$clipboard
-    )
-
-
-    $r = @{} + $PSBoundParameters
-
-    if ($clipboard) {
-        $r.Remove('clipboard')
-        $r.clipboard = $true
-    }
-
-    $r
 }
 
 function New-ColumnOption {
