@@ -1,2 +1,2 @@
 # OutTabulatorView
-Interactive Tables Made Easy
+PowerShell - Sending output to an interactive table in a browser

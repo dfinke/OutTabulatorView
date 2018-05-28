@@ -20,7 +20,7 @@ Copyright = 'c 2018 All rights reserved.'
 
 # Description of the functionality provided by this module
     Description   = @'
-
+PowerShell - Sending output to an interactive table in a browser
 '@
 
 # Minimum version of the Windows PowerShell engine required by this module
@@ -94,10 +94,10 @@ PrivateData = @{
         #IconUri = "http://pesterbdd.com/images/Pester.png"
 
         # The web address of this module's project or support homepage.
-        ProjectUri = "https://github.com/dfinke/ImportExcel"
+        ProjectUri = "https://github.com/dfinke/OutTabulatorView"
 
         # The web address of this module's license. Points to a page that's embeddable and linkable.
-        LicenseUri = "https://github.com/dfinke/ImportExcel/blob/master/LICENSE.txt"
+        LicenseUri = "https://github.com/dfinke/OutTabulatorView/blob/master/LICENSE"
 
         # Release notes for this particular version of the module
         #ReleaseNotes = $True
