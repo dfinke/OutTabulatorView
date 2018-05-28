@@ -4,7 +4,7 @@
 RootModule = 'OutTabulatorView.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # ID used to uniquely identify this module
 GUID = '51c258c2-f49f-49e5-b6ed-05acf3d9ace6'
@@ -60,7 +60,7 @@ PowerShell - Sending output to an interactive table in a browser
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = 'Out-TabulatorView', 'New-ColumnOption'
 
 # Cmdlets to export from this module
 CmdletsToExport = '*'
@@ -69,7 +69,7 @@ CmdletsToExport = '*'
 VariablesToExport = '*'
 
 # Aliases to export from this module
-AliasesToExport = '*'
+AliasesToExport = 'otv'
 
 # List of all modules packaged with this module
 # ModuleList = @()
