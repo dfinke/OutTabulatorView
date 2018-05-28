@@ -10,7 +10,7 @@ function Out-TabulatorView {
         $pagination,
         $paginationSize,
         $groupBy,
-        [switch]$clipboard,               
+        [switch]$clipboard,
         [Parameter(ValueFromPipeline)]
         $data
     )
@@ -20,13 +20,17 @@ function Out-TabulatorView {
     }
 
     Process {
-        $records += $data
+        $records += @($data)
     }
 
     End {
 
         $names = $records[0].psobject.properties.name
-        $targetData = $records | ConvertTo-csv | ConvertFrom-Csv | ConvertTo-Json -Depth 5
+        # $targetData = $records | ConvertTo-csv | ConvertFrom-Csv | ConvertTo-Json -Depth 5
+        $targetData = $records | ConvertTo-Json -Depth 5
+        if ($records.Count -eq $null -or $records.Count -eq 1) {
+            $targetData = "[{0}]" -f $targetData
+        }
 
         $tabulatorColumnOptions = @{}
         $tabulatorColumnOptions.columns = @()
@@ -47,12 +51,12 @@ function Out-TabulatorView {
             $tabulatorColumnOptions.columns += $targetColumn
         }
 
-        $params = @{}+$PSBoundParameters
+        $params = @{} + $PSBoundParameters
 
-        $params.Remove("columnOptions")        
+        $params.Remove("columnOptions")
         $params.Remove("data")
 
-        foreach($entity in $params.GetEnumerator()) {
+        foreach ($entity in $params.GetEnumerator()) {
             $tabulatorColumnOptions.($entity.Key) = $entity.Value
         }
 
@@ -62,13 +66,23 @@ function Out-TabulatorView {
 
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
 
-@"
+        #if($theme) {
+        #    $theme = '<link href="{0}\css\tabulator_{1}.min.css" rel="stylesheet">' -f $PSScriptRoot, $theme
+        #    $theme
+        #}
+
+        @"
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-ui.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\tabulator.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\jquery.sparkline.min.js"></script>
 
 <link href="$PSScriptRoot\css\tabulator.min.css" rel="stylesheet">
+$(
+if($theme) {
+    "<link href=`"$PSScriptRoot\css\tabulator_$($theme).min.css`" rel=`"stylesheet`">"
+}
+)
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator_midnight.min.css" rel="stylesheet"> --!>
 
 <div id="example-table"></div>
@@ -122,3 +136,5 @@ function New-ColumnOption {
 
     @{$cn = @{} + $PSBoundParameters}
 }
+
+Set-Alias otv Out-TabulatorView

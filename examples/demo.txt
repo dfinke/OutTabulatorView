@@ -1,0 +1,32 @@
+# Setup an array for later use
+$columnOptions = @()
+
+# Load the data
+$data = .\data.ps1
+$data | select-object -first 3 | format-table
+
+# Visualize it in a table
+$data | otv $columnOptions
+
+# Format the 'Activity' column
+$columnOptions += New-ColumnOption Activity -formatter lineFormatter
+$data | otv $columnOptions
+
+# Format the 'Progress' column
+$columnOptions += New-ColumnOption Progress -formatter progress
+$data | otv $columnOptions
+
+# Format the 'Rating' column
+$columnOptions += New-ColumnOption Rating -formatter star
+$data | otv $columnOptions
+
+# Format the 'Driver' column
+$columnOptions += New-ColumnOption Driver -formatter tickCross
+$data | otv $columnOptions
+
+# Change the header for the 'dob' column
+$columnOptions += New-ColumnOption dob -title "Date of Birth"
+$data | otv $columnOptions
+
+# Group the data by Gender
+$data | otv $columnOptions -groupBy Gender

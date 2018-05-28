@@ -54,7 +54,7 @@ $ColumnProperties = $(
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
 $data | 
-    Out-TabulatorView $ColumnProperties `
+    Out-TabulatorView $ColumnProperties -theme Site `
         -height 250 `
         -layout fitColumns `
         -pagination local `
