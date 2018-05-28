@@ -130,3 +130,5 @@ function New-ColumnOption {
 }
 
 Set-Alias otv Out-TabulatorView
+
+Export-ModuleMember -Function Out-TabulatorView, New-ColumnOption -Alias otv
