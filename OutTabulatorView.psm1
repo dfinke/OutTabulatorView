@@ -1,4 +1,5 @@
 function Out-TabulatorView {
+    [CmdletBinding()]
     param(
         $columnOptions,
         $height,
@@ -16,7 +17,7 @@ function Out-TabulatorView {
     )
 
     Begin {
-        $htmlFileNname = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
+        $htmlFileName = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
         $records = @()
     }
 
@@ -66,7 +67,8 @@ function Out-TabulatorView {
         $tabulatorColumnOptions = $tabulatorColumnOptions.Replace('"lineFormatter"', 'lineFormatter')
 
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
-        @"
+
+@"
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-ui.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\tabulator.min.js"></script>
@@ -97,9 +99,10 @@ if($theme) {
 `$("#example-table").tabulator("setData", tabledata);
 
 </script>
-"@ | set-content -Encoding Ascii $htmlFileNname
-        Start-Process $htmlFileNname
+"@ | set-content -Encoding Ascii $htmlFileName
+        Start-Process $htmlFileName
 
+        Write-Verbose $htmlFileName
     }
 }
 
@@ -130,5 +133,3 @@ function New-ColumnOption {
 }
 
 Set-Alias otv Out-TabulatorView
-
-Export-ModuleMember -Function Out-TabulatorView, New-ColumnOption -Alias otv
