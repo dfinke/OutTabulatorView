@@ -2,7 +2,7 @@ param(
     [Switch]$NoColumnProperties
 )
 
-Import-Module .\OutTabulatorView.psd1 -Force
+Import-Module ..\OutTabulatorView.psd1 -Force
 
 function New-Record {
     param(
