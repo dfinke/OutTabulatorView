@@ -2,7 +2,7 @@ param(
     [Switch]$NoColumnProperties
 )
 
-Import-Module .\Tabulator.psm1 -Force
+Import-Module .\OutTabulatorView.psd1 -Force
 
 function New-Record {
     param(
@@ -53,7 +53,7 @@ $ColumnProperties = $(
 
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
-$data | 
+$data |
     Out-TabulatorView $ColumnProperties -theme Site `
         -height 250 `
         -layout fitColumns `

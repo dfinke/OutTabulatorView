@@ -16,6 +16,7 @@ function Out-TabulatorView {
     )
 
     Begin {
+        $htmlFileNname = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
         $records = @()
     }
 
@@ -26,8 +27,8 @@ function Out-TabulatorView {
     End {
 
         $names = $records[0].psobject.properties.name
-        # $targetData = $records | ConvertTo-csv | ConvertFrom-Csv | ConvertTo-Json -Depth 5
         $targetData = $records | ConvertTo-Json -Depth 5
+
         if ($records.Count -eq $null -or $records.Count -eq 1) {
             $targetData = "[{0}]" -f $targetData
         }
@@ -65,12 +66,6 @@ function Out-TabulatorView {
         $tabulatorColumnOptions = $tabulatorColumnOptions.Replace('"lineFormatter"', 'lineFormatter')
 
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
-
-        #if($theme) {
-        #    $theme = '<link href="{0}\css\tabulator_{1}.min.css" rel="stylesheet">' -f $PSScriptRoot, $theme
-        #    $theme
-        #}
-
         @"
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="$PSScriptRoot\js\jquery-ui.min.js"></script>
@@ -83,7 +78,6 @@ if($theme) {
     "<link href=`"$PSScriptRoot\css\tabulator_$($theme).min.css`" rel=`"stylesheet`">"
 }
 )
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.1/css/tabulator_midnight.min.css" rel="stylesheet"> --!>
 
 <div id="example-table"></div>
 
@@ -96,8 +90,6 @@ if($theme) {
 
   var tabledata = $($targetData)
 
-  //load sample data into the table
-  //create Tabulator on DOM element with id "example-table"
   `$("#example-table").tabulator(
         $($tabulatorColumnOptions)
 });
@@ -105,8 +97,8 @@ if($theme) {
 `$("#example-table").tabulator("setData", tabledata);
 
 </script>
-"@ | set-content $pwd\testT.html -Encoding Ascii
-        Start-Process "$pwd\testT.html"
+"@ | set-content -Encoding Ascii $htmlFileNname
+        Start-Process $htmlFileNname
 
     }
 }

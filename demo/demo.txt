@@ -1,5 +1,5 @@
 $PSVersionTable
-import-module ..\Tabulator.psm1 -force
+import-module ..\OutTabulatorView.psm1 -force
 $data = ps | select Company, Name, Handles
 
 $data | Out-TabulatorView
