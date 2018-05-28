@@ -1,11 +1,3 @@
-Param (
-    $ModuleName = 'OutTablulatorView',
-    $ModulePath = 'C:\Program Files\WindowsPowerShell\Modules'
-)
-
-$ModuleName = 'OutTablulatorView'
-$ModulePath = 'C:\Program Files\WindowsPowerShell\Modules'
-
-$target = "{0}\{1}" -f $ModulePath, $ModuleName
+$target = 'C:\Program Files\WindowsPowerShell\Modules\OutTablulatorView'
 
 robocopy . $target /mir /xf .gitignore /xd .git
