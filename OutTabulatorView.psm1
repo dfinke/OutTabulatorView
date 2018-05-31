@@ -69,15 +69,15 @@ function Out-TabulatorView {
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
 
 @"
-<script type="text/javascript" src="$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="$PSScriptRoot\js\jquery-ui.min.js"></script>
-<script type="text/javascript" src="$PSScriptRoot\js\tabulator.min.js"></script>
-<script type="text/javascript" src="$PSScriptRoot\js\jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-ui.min.js"></script>
+<script type="text/javascript" src="file:///$PSScriptRoot\js\tabulator.min.js"></script>
+<script type="text/javascript" src="file:///$PSScriptRoot\js\jquery.sparkline.min.js"></script>
 
-<link href="$PSScriptRoot\css\tabulator.min.css" rel="stylesheet">
+<link href="file:///$PSScriptRoot\css\tabulator.min.css" rel="stylesheet">
 $(
 if($theme) {
-    "<link href=`"$PSScriptRoot\css\tabulator_$($theme).min.css`" rel=`"stylesheet`">"
+    "<link href=`"file:///$PSScriptRoot\css\tabulator_$($theme).min.css`" rel=`"stylesheet`">"
 }
 )
 
