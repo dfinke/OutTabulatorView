@@ -28,7 +28,7 @@ function Out-TabulatorView {
     End {
 
         $names = $records[0].psobject.properties.name
-        $targetData = $records | ConvertTo-Json -Depth 5
+        $targetData = $records | ConvertTo-Json -Depth 2 -Compress
 
         if ($records.Count -eq $null -or $records.Count -eq 1) {
             $targetData = "[{0}]" -f $targetData
