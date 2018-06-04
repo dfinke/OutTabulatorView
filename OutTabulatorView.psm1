@@ -12,6 +12,7 @@ function Out-TabulatorView {
         $paginationSize,
         $groupBy,
         [switch]$clipboard,
+        [switch]$headerFilter,
         [Parameter(ValueFromPipeline)]
         $data
     )
@@ -48,6 +49,10 @@ function Out-TabulatorView {
 
             if (!$targetColumn.ContainsKey("title")) {
                 $targetColumn.title = $name
+            }
+
+            if($headerFilter) {
+                $targetColumn.headerFilter = "input"
             }
 
             $tabulatorColumnOptions.columns += $targetColumn
@@ -123,6 +128,7 @@ function New-ColumnOption {
         [string]$headerSort,
         [ValidateSet('true', 'false')]
         [string]$frozen,
+        $headerFilter,
         [int]$width
     )
 
