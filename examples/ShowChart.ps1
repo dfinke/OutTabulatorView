@@ -2,7 +2,7 @@ param(
     [Switch]$NoColumnProperties
 )
 
-Import-Module ..\OutTabulatorView.psd1 -Force
+Import-Module $PSScriptRoot\..\OutTabulatorView.psd1 -Force
 
 function New-Record {
     param(
@@ -43,20 +43,20 @@ $data = $(
 )
 
 $ColumnProperties = $(
-    New-ColumnOption Name -frozen true
+    New-ColumnOption Name -frozen true -headerFilter select
     New-ColumnOption Progress -formatter progress
     New-ColumnOption Activity -formatter lineFormatter
     New-ColumnOption Rating -formatter star
-    New-ColumnOption Driver -formatter tickCross
-    New-ColumnOption dob -title "Date of Birth"
+    New-ColumnOption Driver -formatter tickCross -headerFilter tick
+    New-ColumnOption dob -title "Date of Birth" -headerFilter true
+    New-ColumnOption Gender -headerFilter select
 )
 
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
 $data |
-    Out-TabulatorView $ColumnProperties -theme Site `
+    Out-TabulatorView $ColumnProperties -theme Midnight -PassThru -layout fitColumns `
         -height 250 `
-        -layout fitColumns `
         -pagination local `
         -paginationSize 10 `
         -clipboard
