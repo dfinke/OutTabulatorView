@@ -49,14 +49,14 @@ $ColumnProperties = $(
     New-ColumnOption Rating -formatter star
     New-ColumnOption Driver -formatter tickCross -headerFilter tick
     New-ColumnOption dob -title "Date of Birth" -headerFilter true
+    New-ColumnOption Gender -headerFilter select
 )
 
 if ($NoColumnProperties) { $ColumnProperties = @{} }
 
 $data |
-    Out-TabulatorView $ColumnProperties -theme Midnight `
+    Out-TabulatorView $ColumnProperties -theme Midnight -PassThru -layout fitColumns `
         -height 250 `
-        -layout fitColumns `
         -pagination local `
         -paginationSize 10 `
         -clipboard
