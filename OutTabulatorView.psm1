@@ -69,6 +69,17 @@ function Out-TabulatorView {
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
 
 @"
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Out-TabulatorView</title>
+</head>
+<body>
+    
 <script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-ui.min.js"></script>
 <script type="text/javascript" src="file:///$PSScriptRoot\js\tabulator.min.js"></script>
@@ -99,7 +110,9 @@ if($theme) {
 `$("#example-table").tabulator("setData", tabledata);
 
 </script>
-"@ | set-content -Encoding Ascii $htmlFileName
+</body>
+</html>
+"@ | set-content -Encoding UTF8 $htmlFileName
         Start-Process $htmlFileName
 
         Write-Verbose $htmlFileName
