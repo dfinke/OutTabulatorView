@@ -14,7 +14,7 @@ Grab it from the [PowerShell Gallery](https://www.powershellgallery.com/packages
 
 # What's New 1.1.0
 
-- File encoding changed to UTF8 to support characters like `æøå`
+- Thank you to [ViperTG](https://github.com/ViperTG) for the pull request : File encoding changed to UTF8 to support characters like `æøå`
 
 ```powershell
 Install-Module -Name OutTabulatorView
