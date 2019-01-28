@@ -35,6 +35,7 @@ function Out-TabulatorView {
         }
 
         $tabulatorColumnOptions = @{}
+        $tabulatorColumnOptions['height'] = "98vh"
         $tabulatorColumnOptions.columns = @()
 
         foreach ($name in $names) {
