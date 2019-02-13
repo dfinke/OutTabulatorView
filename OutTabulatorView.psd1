@@ -60,7 +60,7 @@ PowerShell - Sending output to an interactive table in a browser
     # NestedModules = @()
 
     # Functions to export from this module
-    FunctionsToExport = 'Out-TabulatorView', 'New-ColumnOption'
+    FunctionsToExport = 'Out-TabulatorView', 'New-ColumnOption', 'ConvertFrom-Excel'
 
     # Cmdlets to export from this module
     CmdletsToExport   = '*'

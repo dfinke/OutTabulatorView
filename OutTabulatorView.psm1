@@ -1,6 +1,9 @@
+Import-Module $PSScriptRoot\ConvertFromExcel.psm1
+
 function Out-TabulatorView {
     [CmdletBinding()]
     param(
+        $outFile,
         $columnOptions,
         $height,
         [ValidateSet('fitColumns')]
@@ -17,7 +20,10 @@ function Out-TabulatorView {
     )
 
     Begin {
-        $htmlFileName = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
+        if (!$outFile) {
+            $outFile = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
+        }
+
         $records = @()
     }
 
@@ -68,7 +74,7 @@ function Out-TabulatorView {
 
         $tabulatorColumnOptions = $tabulatorColumnOptions.Substring(0, $tabulatorColumnOptions.Length - 1)
 
-@"
+        @"
 <!doctype html>
 
 <html lang="en">
@@ -79,7 +85,7 @@ function Out-TabulatorView {
     <title>Out-TabulatorView</title>
 </head>
 <body>
-    
+
 <script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="file:///$PSScriptRoot\js\jquery-ui.min.js"></script>
 <script type="text/javascript" src="file:///$PSScriptRoot\js\tabulator.min.js"></script>
@@ -112,10 +118,10 @@ if($theme) {
 </script>
 </body>
 </html>
-"@ | set-content -Encoding UTF8 $htmlFileName
-        Start-Process $htmlFileName
+"@ | set-content -Encoding UTF8 $outFile
+        Start-Process $outFile
 
-        Write-Verbose $htmlFileName
+        Write-Verbose $outFile
     }
 }
 
