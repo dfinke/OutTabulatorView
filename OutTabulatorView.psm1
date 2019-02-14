@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\ConvertFromExcel.psm1
+Import-Module $PSScriptRoot\ConvertFromExcel.psm1 -Force
 
 function Out-TabulatorView {
     [CmdletBinding()]
