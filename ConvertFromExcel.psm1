@@ -1,3 +1,15 @@
+function Get-LineFormatterColumnNames {
+    param(
+        $targetColumnOptions
+    )
+
+    foreach ($co in $targetColumnOptions) {
+        if ($co.Values.Values -eq 'lineFormatter') {
+            $co.Keys
+        }
+    }
+}
+
 function ConvertFrom-Excel {
     [CmdletBinding()]
     param(
@@ -26,5 +38,20 @@ function ConvertFrom-Excel {
     # $columnOptions += New-ColumnOption dob -title "Date of Birth"
 
     # Import-Excel -Path $ExcelFile -WorksheetName $WorksheetName | out-tabulatorview $columnOptions -groupBy Gender
-    Import-Excel -Path $ExcelFile -WorksheetName $WorksheetName | Out-TabulatorView -outFile $outFile -columnOptions $columnOptions -groupBy $GroupBy
+
+    $propertyNames = @(Get-LineFormatterColumnNames $columnOptions)
+    if ($propertyNames.Count -eq 0 ) {
+        Import-Excel -Path $ExcelFile -WorksheetName $WorksheetName | Out-TabulatorView -outFile $outFile -columnOptions $columnOptions -groupBy $GroupBy
+    }
+    else {
+        $data = Import-Excel -Path $ExcelFile -WorksheetName $WorksheetName
+
+        foreach ($record in $data) {
+            foreach ($propertyName in $propertyNames) {
+                $record.$propertyName = Invoke-Expression $record.$propertyName
+            }
+        }
+
+        $data | Out-TabulatorView -outFile $outFile -columnOptions $columnOptions -groupBy $GroupBy
+    }
 }
