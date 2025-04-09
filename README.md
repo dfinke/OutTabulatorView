@@ -12,15 +12,13 @@ PowerShell - Sending output to an interactive table in a browser
 
 Grab it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/OutTabulatorView)
 
-# What's New 1.2.0
+## What's New 1.2.0
 
 Now handles large datasets much better thank you [RoYoMi](https://github.com/RoYoMi)!
 
 A 10k item dataset used to take ~2 seconds to load, now it sub second!
 
-```powershell
-
-# What's New 1.1.0
+## What's New 1.1.0
 
 - Thank you to [ViperTG](https://github.com/ViperTG) for the pull request : File encoding changed to UTF8 to support characters like `æøå`
 
