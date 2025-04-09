@@ -17,12 +17,11 @@ function Out-TabulatorView {
     )
 
     Begin {
-        $htmlFileName = [system.io.path]::GetTempFileName() -replace "\.tmp", ".html"
-        $records = @()
+        $htmlFileName = [system.io.path]::GetTempFileName() -replace '\.tmp', '.html'
+        $records = New-Object System.Collections.Generic.List[System.Object]
     }
-
     Process {
-        $records += @($data)
+        $Data | Foreach-Object { $Records.Add( $_ ) }
     }
 
     End {
@@ -31,11 +30,12 @@ function Out-TabulatorView {
         $targetData = $records | ConvertTo-Json -Depth 2 -Compress
 
         if ($records.Count -eq $null -or $records.Count -eq 1) {
-            $targetData = "[{0}]" -f $targetData
+            $targetData = '[{0}]' -f $targetData
         }
 
         $tabulatorColumnOptions = @{}
-        $tabulatorColumnOptions.columns = @()
+        # $tabulatorColumnOptions.columns = @()
+        $tabulatorColumnOptions.columns = New-Object System.Collections.Generic.List[System.Object]
 
         foreach ($name in $names) {
             $targetColumn = @{field = $name}
@@ -46,17 +46,17 @@ function Out-TabulatorView {
                 }
             }
 
-            if (!$targetColumn.ContainsKey("title")) {
+            if (!$targetColumn.ContainsKey('title')) {
                 $targetColumn.title = $name
             }
 
-            $tabulatorColumnOptions.columns += $targetColumn
+            $tabulatorColumnOptions.columns.Add( $targetColumn )
         }
 
         $params = @{} + $PSBoundParameters
 
-        $params.Remove("columnOptions")
-        $params.Remove("data")
+        $params.Remove('columnOptions')
+        $params.Remove('data')
 
         foreach ($entity in $params.GetEnumerator()) {
             $tabulatorColumnOptions.($entity.Key) = $entity.Value
@@ -140,7 +140,7 @@ function New-ColumnOption {
     )
 
     $cn = $PSBoundParameters.ColumnName
-    $null = $PSBoundParameters.Remove("ColumnName")
+    $null = $PSBoundParameters.Remove('ColumnName')
 
     @{$cn = @{} + $PSBoundParameters}
 }

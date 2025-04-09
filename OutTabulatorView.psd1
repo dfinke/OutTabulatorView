@@ -4,7 +4,7 @@
     RootModule        = 'OutTabulatorView.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.1.0'
+    ModuleVersion     = '1.2.0'
 
     # ID used to uniquely identify this module
     GUID              = '51c258c2-f49f-49e5-b6ed-05acf3d9ace6'
